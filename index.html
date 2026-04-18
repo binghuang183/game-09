@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>幸运拉杆抽奖机</title>
     <style>
         * {
@@ -12,29 +13,30 @@
         }
         body {
             background: #f9f9f9;
-            text-align: center;
-            padding: 20px;
+            padding: 15px;
+            max-width: 400px;
+            margin: 0 auto;
         }
         .login-box {
-            margin: 40px auto;
-            max-width: 340px;
+            margin: 40px 0;
+            text-align: center;
         }
         input {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             font-size: 16px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             border: 1px solid #ddd;
-            border-radius: 6px;
+            border-radius: 8px;
         }
         button {
-            padding: 10px 18px;
+            padding: 12px 20px;
             background: #ff4444;
             color: #fff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             margin: 4px;
         }
         button.gray {
@@ -42,17 +44,37 @@
         }
         button:disabled {
             background: #ccc;
-            cursor: not-allowed;
         }
+
         .machine-box {
             display: none;
-            margin: 20px auto;
-            max-width: 380px;
+            margin: 20px 0;
         }
         .info {
             font-size: 17px;
+            text-align: center;
             margin-bottom: 15px;
         }
+
+        /* 奖品列表 */
+        .prize-list {
+            background: #fff;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+        .prize-list h3 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .prize-item {
+            padding: 6px 0;
+            font-size: 15px;
+            text-align: center;
+        }
+
         .screen {
             width: 100%;
             height: 100px;
@@ -62,7 +84,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             color: #c62828;
             margin-bottom: 20px;
@@ -81,20 +103,20 @@
             transform: translateY(22px);
         }
         .result {
-            font-size: 23px;
+            font-size: 22px;
             color: #ff4444;
             font-weight: bold;
+            text-align: center;
             margin: 15px 0;
         }
 
         .record-box {
-            margin: 25px auto;
-            text-align: left;
+            margin: 25px 0;
         }
         .record-box h3 {
-            margin-bottom: 8px;
-            font-size: 16px;
             text-align: center;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
         table {
             width: 100%;
@@ -104,7 +126,7 @@
         }
         th, td {
             border: 1px solid #ccc;
-            padding: 6px;
+            padding: 8px 6px;
             text-align: center;
         }
         th {
@@ -123,6 +145,20 @@
 
 <div class="machine-box" id="machineBox">
     <div class="info">剩余次数：<span id="remainCount">0</span> 次</div>
+
+    <!-- 奖品列表 -->
+    <div class="prize-list">
+        <h3>奖品一览</h3>
+        <div class="prize-item">特等奖</div>
+        <div class="prize-item">精美礼品</div>
+        <div class="prize-item">100元代金券</div>
+        <div class="prize-item">50元代金券</div>
+        <div class="prize-item">20元代金券</div>
+        <div class="prize-item">10元代金券</div>
+        <div class="prize-item">5元代金券</div>
+        <div class="prize-item">谢谢参与</div>
+    </div>
+
     <div class="screen" id="screen">准备抽奖</div>
     <div class="handle" onclick="pullHandle()"></div>
     <div class="result" id="result"></div>
@@ -167,9 +203,9 @@
     const noRepeatPrize = ["特等奖", "精美礼品", "100元代金券"];
 
     let currentPwd = '';
-    let rolling = false; // 防作弊：滚动中禁止再次点击
+    let rolling = false;
 
-    // 读取密码使用记录
+    // 密码使用记录
     function getUsed() {
         let d = localStorage.getItem('usedPwd');
         return d ? JSON.parse(d) : {};
@@ -197,7 +233,6 @@
         localStorage.setItem('luckyRecords', JSON.stringify(list));
     }
 
-    // 渲染记录
     function renderRecords() {
         let list = getRecords();
         let html = '';
@@ -230,12 +265,10 @@
         renderRecords();
     }
 
-    // 获取奖品（自动排除已中过的大奖）
+    // 抽奖品（去重）
     function getPrize() {
         let records = getRecords();
-        let userPrizes = records
-            .filter(r => r.pwd === currentPwd)
-            .map(r => r.prize);
+        let userPrizes = records.filter(r => r.pwd === currentPwd).map(r => r.prize);
 
         let allowed = prizeList.filter(p => {
             if (noRepeatPrize.includes(p.name)) {
@@ -254,9 +287,8 @@
         return allowed[0].name;
     }
 
-    // 拉杆抽奖 + 防连点作弊
+    // 拉杆 + 防作弊
     function pullHandle() {
-        // 防作弊：正在滚动时禁止点击
         if (rolling) {
             alert("正在抽奖中，请勿重复点击！");
             return;
@@ -269,7 +301,7 @@
             return;
         }
 
-        rolling = true; // 上锁
+        rolling = true;
         document.getElementById('result').innerText = '';
 
         let count = 0;
@@ -290,7 +322,7 @@
                 document.getElementById('remainCount').innerText = remain;
                 document.getElementById('result').innerText = '恭喜获得：' + res;
 
-                rolling = false; // 解锁
+                rolling = false;
 
                 if (remain === 0) {
                     setTimeout(()=>alert("次数已用完，该密码无法再次使用！"),500);
