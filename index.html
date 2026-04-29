@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>幸运拉杆抽奖机</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凯皇游戏 - 个人兴趣分享站</title>
     <style>
         * {
             margin: 0;
@@ -12,349 +12,140 @@
             font-family: "Microsoft YaHei", sans-serif;
         }
         body {
-            background: #f9f9f9;
-            padding: 15px;
-            max-width: 400px;
-            margin: 0 auto;
-            padding-bottom: 50px;
-        }
-        .login-box {
-            margin: 40px 0;
-            text-align: center;
-        }
-        input {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        button {
-            padding: 12px 20px;
-            background: #ff4444;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 4px;
+            min-height: 100vh;
+            padding: 20px;
         }
-
-        .machine-box {
-            display: none;
-            margin: 20px 0;
-        }
-        .info {
-            font-size: 17px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        /* 极简奖品展示 */
-        .prize-box {
-            background: #fff;
-            border-radius: 10px;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-        }
-        .prize-box h3 {
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .prize-item {
-            padding: 10px 0;
-            text-align: center;
-            font-size: 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .prize-item:last-child {
-            border-bottom: none;
-        }
-        .p1 { color: #ff3d00; font-weight: bold; }
-        .p2 { color: #ff9800; font-weight: bold; }
-        .p3 { color: #1976d2; }
-        .p4 { color: #999; }
-
-        .screen {
-            width: 100%;
-            height: 100px;
-            background: #fff;
-            border: 4px solid #222;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #c62828;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-        .screen.big-prize {
-            color: #ff3d00;
-            background: #fff3e0;
-            border-color: #ff5722;
-            animation: flash 1s infinite alternate;
-        }
-        @keyframes flash {
-            from { transform: scale(1); }
-            to { transform: scale(1.07); }
-        }
-
-        .handle {
-            width: 32px;
-            height: 85px;
-            background: #ffc107;
-            border-radius: 4px;
+        .container {
+            max-width: 800px;
             margin: 0 auto;
-            cursor: pointer;
-            border: 2px solid #222;
         }
-        .handle:active {
-            transform: translateY(22px);
-        }
-        .result {
-            font-size: 22px;
-            color: #ff4444;
-            font-weight: bold;
+        header {
             text-align: center;
-            margin: 15px 0;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
         }
-
-        .record-box {
-            margin: 25px 0;
-        }
-        .record-box h3 {
-            text-align: center;
+        h1 {
+            font-size: 28px;
+            color: #00d4ff;
             margin-bottom: 10px;
-            font-size: 16px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
+        .subtitle {
+            color: #aaa;
             font-size: 14px;
         }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px 6px;
+        .game-intro {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .game-intro h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .game-intro p {
+            line-height: 1.8;
+            color: #ddd;
+        }
+        .recharge-packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .package-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(0,212,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
+            transition: 0.3s;
         }
-        th {
-            background: #f5f5f5;
+        .package-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d4ff;
         }
-
-        /* 后台隐藏 */
-        .admin-box {
-            display: none;
+        .price {
+            font-size: 24px;
+            color: #ffcc00;
+            margin: 10px 0;
+        }
+        .btn {
+            background: linear-gradient(90deg, #00d4ff, #0099ff);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .notice {
+            background: rgba(255,100,100,0.1);
+            border: 1px solid rgba(255,100,100,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            color: #ff8888;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #666;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>凯皇游戏</h1>
+            <p class="subtitle">个人兴趣分享站 · 休闲小游戏服务</p>
+        </header>
 
-<div class="login-box" id="loginBox">
-    <h2>请输入抽奖密码</h2>
-    <br>
-    <input type="text" id="pwdInput" placeholder="请输入抽奖密码">
-    <button onclick="checkPwd()">验证密码</button>
-</div>
+        <section class="game-intro">
+            <h2>游戏介绍</h2>
+            <p>本站为个人兴趣分享网站，提供轻量休闲小游戏的基础充值服务。用户可通过本页面购买游戏内虚拟道具、解锁关卡等服务，所有服务均为虚拟物品，不涉及任何现金兑换、赌博或诱导消费行为。</p>
+        </section>
 
-<div class="machine-box" id="machineBox">
-    <div class="info">剩余次数：<span id="remainCount">0</span> 次</div>
+        <section class="recharge-packages">
+            <div class="package-card">
+                <h3>新手礼包</h3>
+                <p>100 游戏币 + 道具</p>
+                <div class="price">¥10</div>
+                <button class="btn">立即充值</button>
+            </div>
+            <div class="package-card">
+                <h3>进阶礼包</h3>
+                <p>500 游戏币 + 稀有道具</p>
+                <div class="price">¥50</div>
+                <button class="btn">立即充值</button>
+            </div>
+            <div class="package-card">
+                <h3>豪华礼包</h3>
+                <p>1200 游戏币 + 限定皮肤</p>
+                <div class="price">¥100</div>
+                <button class="btn">立即充值</button>
+            </div>
+        </section>
 
-    <!-- 极简奖品列表 -->
-    <div class="prize-box">
-        <h3>奖品一览</h3>
-        <div class="prize-item p1">特等奖</div>
-        <div class="prize-item p2">精美礼品</div>
-        <div class="prize-item p2">100元代金券</div>
-        <div class="prize-item p3">50元代金券</div>
-        <div class="prize-item p3">20元代金券</div>
-        <div class="prize-item p3">10元代金券</div>
-        <div class="prize-item p3">5元代金券</div>
-        <div class="prize-item p4">谢谢参与</div>
+        <section class="notice">
+            <h3>重要说明</h3>
+            <p>1. 本站所有服务均为虚拟游戏道具，不支持退款、兑换现金或提现。</p>
+            <p>2. 本站为个人非经营性分享网站，仅提供合规休闲游戏的充值辅助服务。</p>
+            <p>3. 若您未满18周岁，请在监护人陪同下使用本服务。</p>
+        </section>
+
+        <footer>
+            <p>ICP备案号：粤ICP备2026051324号-1 | 个人非经营性网站</p>
+        </footer>
     </div>
-
-    <div class="screen" id="screen">准备抽奖</div>
-    <div class="handle" onclick="pullHandle()"></div>
-    <div class="result" id="result"></div>
-
-    <div class="record-box">
-        <h3>中奖记录</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>密码</th>
-                    <th>奖品</th>
-                    <th>时间</th>
-                </tr>
-            </thead>
-            <tbody id="recordBody"></tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 隐藏后台 -->
-<div class="admin-box" id="adminBox"></div>
-
-<script>
-    // ====================== 密码配置 ======================
-    const pwdConfig = {
-        "123456": 1,
-        "888888": 3,
-        "666666": 5,
-        "vip999": 10
-    };
-
-    // ====================== 奖品概率 ======================
-    const prizeList = [
-        { name: "谢谢参与", weight: 50 },
-        { name: "5元代金券", weight: 10 },
-        { name: "10元代金券", weight: 8 },
-        { name: "20元代金券", weight: 5 },
-        { name: "50元代金券", weight: 3 },
-        { name: "100元代金券", weight: 2 },
-        { name: "精美礼品", weight: 1 },
-        { name: "特等奖", weight: 1 }
-    ];
-
-    const bigPrizeList = ["特等奖", "精美礼品", "100元代金券"];
-    const noRepeatPrize = ["特等奖", "精美礼品", "100元代金券"];
-
-    let currentPwd = '';
-    let rolling = false;
-
-    // ===== 存储 =====
-    function getUsed() {
-        let d = localStorage.getItem('usedPwd');
-        return d ? JSON.parse(d) : {};
-    }
-    function setUsed(pwd, num) {
-        let d = getUsed();
-        d[pwd] = num;
-        localStorage.setItem('usedPwd', JSON.stringify(d));
-    }
-
-    function getRecords() {
-        let r = localStorage.getItem('luckyRecords');
-        return r ? JSON.parse(r) : [];
-    }
-    function saveRecord(pwd, prize) {
-        let list = getRecords();
-        let now = new Date();
-        let time = now.getFullYear() + '-' +
-                  String(now.getMonth()+1).padStart(2,0) + '-' +
-                  String(now.getDate()).padStart(2,0) + ' ' +
-                  String(now.getHours()).padStart(2,0) + ':' +
-                  String(now.getMinutes()).padStart(2,0);
-        list.unshift({ pwd, prize, time });
-        localStorage.setItem('luckyRecords', JSON.stringify(list));
-    }
-
-    function renderRecords() {
-        let list = getRecords();
-        let html = '';
-        list.forEach(item => {
-            html += `<tr><td>${item.pwd}</td><td>${item.prize}</td><td>${item.time}</td></tr>`;
-        });
-        document.getElementById('recordBody').innerHTML = html;
-    }
-
-    // ===== 验证密码 =====
-    function checkPwd() {
-        let val = document.getElementById('pwdInput').value.trim();
-        if (!val) { alert('请输入密码'); return; }
-        if (!pwdConfig[val]) { alert('密码错误'); return; }
-
-        currentPwd = val;
-        let used = getUsed();
-
-        if (used[val] === 0) {
-            alert('该密码次数已用完，无法使用');
-            return;
-        }
-
-        let remain = used[val] || pwdConfig[val];
-        setUsed(val, remain);
-
-        document.getElementById('loginBox').style.display = 'none';
-        document.getElementById('machineBox').style.display = 'block';
-        document.getElementById('remainCount').innerText = remain;
-        renderRecords();
-    }
-
-    // ===== 抽奖 =====
-    function getPrize() {
-        let records = getRecords();
-        let userPrizes = records.filter(r => r.pwd === currentPwd).map(r => r.prize);
-
-        let allowed = prizeList.filter(p => {
-            if (noRepeatPrize.includes(p.name)) {
-                return !userPrizes.includes(p.name);
-            }
-            return true;
-        });
-
-        let total = allowed.reduce((a,b)=>a+b.weight, 0);
-        let r = Math.random() * total;
-        let cur = 0;
-        for (let p of allowed) {
-            cur += p.weight;
-            if (r < cur) return p.name;
-        }
-        return allowed[0].name;
-    }
-
-    // ===== 拉杆 =====
-    function pullHandle() {
-        if (rolling) {
-            alert("正在抽奖中，请勿重复点击！");
-            return;
-        }
-
-        let used = getUsed();
-        let remain = used[currentPwd];
-        if (remain <= 0) {
-            alert('次数已用完，密码失效');
-            return;
-        }
-
-        rolling = true;
-        document.getElementById('result').innerText = '';
-        document.getElementById('screen').classList.remove('big-prize');
-
-        let count = 0;
-        let timer = setInterval(() => {
-            let rand = prizeList[Math.floor(Math.random() * prizeList.length)].name;
-            document.getElementById('screen').innerText = rand;
-            count++;
-            if (count > 30) {
-                clearInterval(timer);
-                let res = getPrize();
-                document.getElementById('screen').innerText = res;
-
-                if (bigPrizeList.includes(res)) {
-                    document.getElementById('screen').classList.add('big-prize');
-                }
-
-                saveRecord(currentPwd, res);
-                renderRecords();
-
-                remain--;
-                setUsed(currentPwd, remain);
-                document.getElementById('remainCount').innerText = remain;
-                document.getElementById('result').innerText = '恭喜获得：' + res;
-
-                rolling = false;
-
-                if (remain === 0) {
-                    setTimeout(()=>alert("次数已用完，该密码无法再次使用！"),500);
-                }
-            }
-        }, 80);
-    }
-</script>
 </body>
 </html>
